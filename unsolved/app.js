@@ -1,9 +1,3 @@
-function employees(){
-    console.log("Hello World")
-    document.getElementById("demo").text = employeeList[0];
-    console.log(employeeList);
-}
-
 // var cars = ["Saab", "Volvo", "BMW"];
 // document.getElementById("demo").innerHTML = cars;
 
@@ -22,12 +16,13 @@ function employees(){
 //     render(list);
 // }
 
-const render = function(content){
+let view = function(content){
+    $(content).empty();
     for(i = 0; i < employeeList.length; i++){
         console.log(employeeList[i]);
         // document.write(`<div class = card-body><p class= card text> ${employeeList[i].name}</p><p class=card-text> ${employeeList[i].officeNum}</p><p class=card text> ${employeeList[i].phoneNum}</p></div>`);
-        $(content).append(`<p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p>`);
+        // $(content).append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
     }
 }
 
-render('.content');
+$('#view').on('click', view('.content'));
