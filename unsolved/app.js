@@ -1,34 +1,33 @@
 
-// Print out list of Employess to content, verification answer - subfunction
-const render = function (content) {
-    $("#content").html(content);
-  }
+
 
 
   //clear out view to enable button usage
   const initView = function(){
-    $(".form").hide;
-    $("#content").empty();
+    // $(".form").hide;
+    // $("#content").empty();
   }
 //setup initial view to clear any content
 initView();
 
 
 //declaring view, merely printing employeeList into cards
-const view = function(){
+const view = function(event){
+event.preventDefault();
       let employees = "";
     for(i = 0; i < employeeList.length; i++){
         employees = $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
     }
-    render(employees);  
+    $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
 }
-//calling view to print out list - doesn"t work
-$("#view").on("click",view());
+
 
 // $("#view").on("click", view);
 
 //declaring addView, will add form in and button to run add function
-const addView = function(){
+const addView = function(event){
+  event.preventDefault();
+  $(".form").empty();
     $(".form").show();
     $(".form").append(`<input id = "name" placeholder="Name">
     <input id = "office" placeholder="Office Number">
@@ -38,7 +37,8 @@ const addView = function(){
 }
 
 //declaring add, adding values from form and pushing it into array
-const add = function(){
+const add = function(event){
+  event.preventDefault();
     const nameVal = $("#name").val();
     const officeVal = $("#office").val();
     const phoneVal = $("#phone").val();
@@ -46,24 +46,25 @@ const add = function(){
       name: nameVal,
       officeNum: officeVal,
       phoneNum: phoneVal
+      
     })
-    render();
+    $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
+    console.log(employeeList)
 }
-//Click on Add to switch to add view, 3 part form with no content
-$("#add").on("click", addView());
 
-//Run add function when Submit button on add form is clicked
-$("#addButton").on("click", add())
 
 //Declare verify view, 1 box for name and submit button
-const verifyView = function(){
+const verifyView = function(event){
+  event.preventDefault();
+  $(".form").empty();
     $(".form").show();
-    $(".form").append(`input id = "verifyinput" placeholder="Verify Employee">
-    <button id = "verifybutton"Submit</button>`)
+    $(".form").append(`<input id = 'verifyinput' placeholder="Verify Employee">
+    <button id = "verifybutton">Submit</button>`)
     $(".content").empty();
 }
 //Declare verify function, checks for name in array
-const verify = function(){
+const verify = function(event){
+  event.preventDefault();
     const userName = $("#verifyinput").val();
     let answer = ""
     for (let i = 0; i < employeeList.length; i++) {
@@ -73,23 +74,24 @@ const verify = function(){
           answer = "Please see HR."
       }
     }
-    render(answer);
+  
+    $(".content").text(answer)
   }
-// Sets up verify view
-  $("#verify").on("click", verifyView())
-// runs verify function
-  $("#verifybutton").on("click",verify())
+
 
   //Declare update view 3 boxes and button
-  const updateView = function(){
+  const updateView = function(event){
+    event.preventDefault();
+    $(".form").empty();
       $(".form").show();
-      $(".form").append(`input id = "updatename" placeholder="Name">
+      $(".form").append(`<input id = "updatename" placeholder="Name">
       <input id = "updateoffice" placeholder="Office Number">
       <input id = "updatephone" placeholder="Phone Number">
       <button id= "updateButton">Submit</button> `);
   }
 // Update function to grab input from boxes and return the employeeList
-  const update = function(){
+  const update = function(event){
+    event.preventDefault();
     const userName = $("#updatename").val();
     const officeNum = $("#updateoffice").val();
     const phoneNum = $("#updatephone").val();
@@ -99,35 +101,65 @@ const verify = function(){
         employeeList[i].phoneNum = phoneNum;
       }
     }
-    render();
+    $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
   }
 
-// Sets up update view
-$("#update").on("click", updateView())
-// runs update function
-  $("#updatebutton").on("click",update())
+
 
 // Declare deleteView to show form and empty content
-const deleteView = function(){
+const deleteView = function(event){
+  event.preventDefault();
+  $(".form").empty();
     $(".form").show();
-    $(".form").append(`input id = "deleteinput" placeholder="Delete Employee">
-    <button id = "deletebutton"Submit</button>`)
+    $(".form").append(`<input id = "deleteinput" placeholder="Delete Employee">
+    <button id = "deletebutton">Submit</button>`)
     $(".content").empty();
 
 }
 
 //Delete function to match input and remove name from array
-const del = function(){
+const del = function(event){
+  event.preventDefault();
     const deleteName = $("#deleteinput").val();
     for (let i = 0; i < employeeList.length; i++) {
       if (employeeList[i].name === deleteName) {
         employeeList.splice(i, 1);
+        
       }
     }
-    render();
+    render()
+    // $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
+    // console.log(employeeList[i])
   }
 
-// Sets up update view
-$("#delete").on("click", deleteView())
+
+
+  // Print out list of Employess to content, verification answer - subfunction
+const render = function(content){
+
+  $("#content").html(content);
+}
+
+//calling view to print out list - doesn"t work
+$("#view").on("click",view);
+
+//Click on Add to switch to add view, 3 part form with no content
+$("#add").on("click", addView);
+
+//Run add function when Submit button on add form is clicked
+$(".form").on("click", add);
+
+// Sets up verify view
+$("#verify").on("click", verifyView)
+// runs verify function
+  $(".form").on("click",verify)
+
+  // Sets up update view
+$("#update").on("click", updateView)
 // runs update function
-  $("#deletebutton").on("click",del())
+  $(".form").on("click",update)
+
+// Sets up delete view
+$("#delete").on("click", deleteView)
+// runs delete function
+  $(".form").on("click",del)
