@@ -1,0 +1,27 @@
+.card {
+    padding: 0px 10px;
+    margin-top: 15px;
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    background-color: dodgerblue;
+    color: whitesmoke;
+}
+
+.sidenav {
+    position: relative;
+    right: 128%;
+    background-color: dodgerblue;
+    width: 300px;
+    height: 1500px;
+}
+
+.sidebuttons {
+    position: relative;
+    top: 200px;
+    left: 30%;
+    width: 35%;
+}
+

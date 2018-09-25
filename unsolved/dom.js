@@ -63,6 +63,20 @@ const $ = function (selector) {
     }
   }
 
+  const show = function () {
+    for (let i = 0; i < nodeList.length; i++) {
+      nodeList[i].display = '';
+    }
+  }
+
+  const hide = function () {
+    for (let i = 0; i < nodeList.length; i++) {
+      nodeList[i].display = 'none';
+    }
+  }
+
+    
+
   return {
     text: text,
     html: html,
@@ -73,6 +87,8 @@ const $ = function (selector) {
     append: append,
     prepend: prepend,
     on: on,
-    val: val
+    val: val,
+    show: show,
+    hide: hide,
   };
 }
