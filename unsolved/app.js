@@ -14,6 +14,7 @@ initView();
 //declaring view, merely printing employeeList into cards
 const view = function(event){
 event.preventDefault();
+$('.content').empty();
       let employees = "";
     for(i = 0; i < employeeList.length; i++){
         employees = $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
@@ -22,17 +23,19 @@ event.preventDefault();
 }
 
 
+
 // $("#view").on("click", view);
 
 //declaring addView, will add form in and button to run add function
 const addView = function(event){
   event.preventDefault();
   $(".form").empty();
+  $('.submitbutton').empty();
     $(".form").show();
     $(".form").append(`<input id = "name" placeholder="Name">
     <input id = "office" placeholder="Office Number">
-    <input id = "phone" placeholder="Phone Number">
-    <button id= "addButton">Submit</button> `);
+    <input id = "phone" placeholder="Phone Number">`);
+    $('.submitbutton').append(`<button id = "verifybutton">Submit</button>`)
     $("#content").empty();
 }
 
@@ -48,8 +51,9 @@ const add = function(event){
       phoneNum: phoneVal
       
     })
-    $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
-    console.log(employeeList)
+    render();
+    // $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
+    // console.log(employeeList)
 }
 
 
@@ -57,9 +61,10 @@ const add = function(event){
 const verifyView = function(event){
   event.preventDefault();
   $(".form").empty();
+  $('.submitbutton').empty();
     $(".form").show();
-    $(".form").append(`<input id = 'verifyinput' placeholder="Verify Employee">
-    <button id = "verifybutton">Submit</button>`)
+    $(".form").append(`<input id = 'verifyinput' placeholder="Verify Employee">`)
+    $('.submitbutton').append(`<button id = "verifybutton">Submit</button>`)
     $(".content").empty();
 }
 //Declare verify function, checks for name in array
@@ -69,13 +74,12 @@ const verify = function(event){
     let answer = ""
     for (let i = 0; i < employeeList.length; i++) {
       if (employeeList[i].name === userName) {
-        answer = "Yes they are currently an employee";
-      }else {
-          answer = "Please see HR."
+        answer = "Yes, they are currently an employee.";
+        return $(".content").text(answer);
       }
     }
-  
-    $(".content").text(answer)
+
+      return $(".content").text("Please see HR.");
   }
 
 
@@ -83,11 +87,13 @@ const verify = function(event){
   const updateView = function(event){
     event.preventDefault();
     $(".form").empty();
+    $('.submitbutton').empty();
       $(".form").show();
       $(".form").append(`<input id = "updatename" placeholder="Name">
       <input id = "updateoffice" placeholder="Office Number">
-      <input id = "updatephone" placeholder="Phone Number">
-      <button id= "updateButton">Submit</button> `);
+      <input id = "updatephone" placeholder="Phone Number">`);
+      $('.submitbutton').append(`<button id = "updatebutton">Submit</button>`)
+    
   }
 // Update function to grab input from boxes and return the employeeList
   const update = function(event){
@@ -101,7 +107,8 @@ const verify = function(event){
         employeeList[i].phoneNum = phoneNum;
       }
     }
-    $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
+    render();
+    // $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
   }
 
 
@@ -110,9 +117,10 @@ const verify = function(event){
 const deleteView = function(event){
   event.preventDefault();
   $(".form").empty();
+  $('.submitbutton').empty();
     $(".form").show();
-    $(".form").append(`<input id = "deleteinput" placeholder="Delete Employee">
-    <button id = "deletebutton">Submit</button>`)
+    $(".form").append(`<input id = "deleteinput" placeholder="Delete Employee">`)
+    $('.submitbutton').append(`<button id = "updatebutton">Submit</button>`)
     $(".content").empty();
 
 }
@@ -135,9 +143,13 @@ const del = function(event){
 
 
   // Print out list of Employess to content, verification answer - subfunction
-const render = function(content){
-
-  $("#content").html(content);
+const render = function(){
+  $('.content').empty();
+  let employees = "";
+  for(i = 0; i < employeeList.length; i++){
+      employees = $(".content").append(`<div class = card><p>${employeeList[i].name}</p><p>${employeeList[i].officeNum}</p><p>${employeeList[i].phoneNum}</div>`);
+  }
+  // $("#content").html(content);
 }
 
 //calling view to print out list - doesn"t work
@@ -147,19 +159,19 @@ $("#view").on("click",view);
 $("#add").on("click", addView);
 
 //Run add function when Submit button on add form is clicked
-$(".form").on("click", add);
+$(".submitbutton").on("click", add);
 
 // Sets up verify view
 $("#verify").on("click", verifyView)
 // runs verify function
-  $(".form").on("click",verify)
+  $('.submitbutton').on("click",verify)
 
   // Sets up update view
 $("#update").on("click", updateView)
 // runs update function
-  $(".form").on("click",update)
+  $(".submitbutton").on("click",update)
 
 // Sets up delete view
 $("#delete").on("click", deleteView)
 // runs delete function
-  $(".form").on("click",del)
+  $(".submitbutton").on("click",del)
